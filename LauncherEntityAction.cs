@@ -24,13 +24,32 @@ namespace NimbusFox.LauncherAPI {
                 var release = launcher.GetAmount();
                 if (launcher.UseInventory()) {
                     if (entity.Inventory.CountItemsWithCode(launcher.GetItemToThrow()) < 1) {
-                        goto end;
-                    } else {
-                        if (entity.Inventory.CountItemsWithCode(launcher.GetItemToThrow()) < release) {
-                            release = (byte) entity.Inventory.CountItemsWithCode(launcher.GetItemToThrow());
+                        if (entity.PlayerEntityLogic != null) {
+
+                            var config =
+                                GameContext.NotificationDatabase.GetNotificationConfig(
+                                    "nimbusfox.launcherapi.notifications.NoAmmo");
+
+                            config.LangCode = launcher.GetNoAmmoCode();
+
+                            var notifcation = GameContext.NotificationDatabase.CreateNotificationFromCode(
+                                "nimbusfox.launcherapi.notifications.NoAmmo", facade.Step, NotificationParams.EmptyParams, true);
+
+                            var blankBlob = BlobAllocator.Blob(true);
+
+                            blankBlob.FetchBlob("textParams");
+
+                            notifcation.Restore(config, blankBlob);
+
+                            entity.PlayerEntityLogic.ShowNotification(notifcation);
                         }
-                        entity.Inventory.RemoveItemWithCode(launcher.GetItemToThrow(), release, "");
+                        goto end;
                     }
+
+                    if (entity.Inventory.CountItemsWithCode(launcher.GetItemToThrow()) < release) {
+                        release = (byte) entity.Inventory.CountItemsWithCode(launcher.GetItemToThrow());
+                    }
+                    entity.Inventory.RemoveItemWithCode(launcher.GetItemToThrow(), release, "");
                 }
 
                 Item item = null;

@@ -20,6 +20,7 @@ namespace NimbusFox.LauncherAPI {
         private double _velocity;
         private string _kind;
         private byte _amount;
+        private string _noAmmoCode;
 
         public LauncherTool(LauncherToolBuilder builder, ItemConfiguration config) : base(builder.Kind()) {
             _builder = builder;
@@ -79,14 +80,30 @@ namespace NimbusFox.LauncherAPI {
             return _amount;
         }
 
+        public string GetNoAmmoCode() {
+            return _noAmmoCode;
+        }
+
         public override void Restore(ItemConfiguration config, Blob blob) {
-            var component = Configuration?.Components.Get<LaunchableComponent>();
+            var component = Configuration.Components.Get<LaunchableComponent>();
 
             _itemToThrow = component.ItemToThrow;
             _useInventory = component.UseInventory;
             _velocity = component.Velocity;
             _kind = component.Kind;
             _amount = component.Amount;
+            _noAmmoCode = component.NoAmmoCode;
+        }
+
+        public override bool TryResolveMainInteractVerb(Entity entity, EntityUniverseFacade facade, Entity lookedAtEntity, out string verb) {
+            verb = InteractVerb();
+            return true;
+        }
+
+        public override bool TryResolveMainInteractVerb(Entity entity, EntityUniverseFacade facade, Vector3I location,
+            TileConfiguration lookedAtTile, out string verb) {
+            verb = InteractVerb();
+            return true;
         }
     }
 }

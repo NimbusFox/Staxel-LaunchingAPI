@@ -1,0 +1,6 @@
+﻿{
+  "__inherits": "staxel/notifications/GeneralNotification.config",
+  "code": "nimbusfox.launcherapi.notifications.NoAmmo",
+  "translationCode": "nimbusfox.launcherapi.noammo",
+  "icon": "staxel/notifications/icons/NoIcon.png"
+}

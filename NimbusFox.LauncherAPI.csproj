@@ -64,6 +64,9 @@
     <None Include="NimbusFox.LauncherAPI-En-GB.lang">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="NoAmmo.notification">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
