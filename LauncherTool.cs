@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Plukit.Base;
 using Staxel.Client;
 using Staxel.Collections;
@@ -42,6 +38,15 @@ namespace NimbusFox.LauncherAPI {
             }
 
             Configuration = item.Configuration;
+
+            var component = Configuration.Components.Get<LaunchableComponent>();
+
+            _itemToThrow = component.ItemToThrow;
+            _useInventory = component.UseInventory;
+            _velocity = component.Velocity;
+            _kind = component.Kind;
+            _amount = component.Amount;
+            _noAmmoCode = component.NoAmmoCode;
         }
 
         public override ItemRenderer FetchRenderer() {
@@ -82,17 +87,6 @@ namespace NimbusFox.LauncherAPI {
 
         public string GetNoAmmoCode() {
             return _noAmmoCode;
-        }
-
-        public override void Restore(ItemConfiguration config, Blob blob) {
-            var component = Configuration.Components.Get<LaunchableComponent>();
-
-            _itemToThrow = component.ItemToThrow;
-            _useInventory = component.UseInventory;
-            _velocity = component.Velocity;
-            _kind = component.Kind;
-            _amount = component.Amount;
-            _noAmmoCode = component.NoAmmoCode;
         }
 
         public override bool TryResolveMainInteractVerb(Entity entity, EntityUniverseFacade facade, Entity lookedAtEntity, out string verb) {

@@ -1,8 +1,6 @@
 ﻿using System.Linq;
 using Plukit.Base;
 using Staxel;
-using Staxel.Core;
-using Staxel.Effects;
 using Staxel.Entities;
 using Staxel.EntityActions;
 using Staxel.Items;
